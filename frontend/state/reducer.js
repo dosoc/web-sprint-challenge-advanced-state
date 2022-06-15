@@ -2,7 +2,7 @@
 import * as types from './action-types'
 import { combineReducers } from 'redux'
 
-const initialWheelState = 4
+const initialWheelState = 0
 function wheel(state = initialWheelState, action) {
   switch(action.type) {
     case types.MOVE_CLOCKWISE: {
