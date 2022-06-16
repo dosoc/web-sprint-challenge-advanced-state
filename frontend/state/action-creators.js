@@ -54,9 +54,8 @@ export function postAnswer(payload) {
     axios.post("http://localhost:9000/api/quiz/answer", payload)
       .then(res=> {
         const infoMessage = res.data.message
-        console.log(infoMessage)
-        // dispatch({ type: types.SET_QUIZ_INTO_STATE, payload: null})
-        dispatch({ type: types.SET_INFO_MESSAGE, payload: infoMessage })
+        dispatch({ type: types.SET_QUIZ_INTO_STATE, payload: null})
+        dispatch(setMessage(infoMessage))
       })
       .catch(err=> {
         console.error(err)
@@ -71,11 +70,10 @@ export function postQuiz(payload) {
   return function (dispatch) {
     axios.post("http://localhost:9000/api/quiz/new", payload)
     .then(res=> {
-      console.log(res)
-      const newMessage = `Congrats: "${res.data.question}" is a great question!`
+      const infoMessage = `Congrats: "${res.data.question}" is a great question!`
       const newQuestion = res.data
-      // dispatch({type: types.SET_QUIZ_INTO_STATE, payload: newQuestion})
-      dispatch({type: types.SET_INFO_MESSAGE, payload: newMessage})
+      dispatch(setQuiz(newQuestion))
+      dispatch(setMessage(infoMessage))
     })
     .catch(err=> {
       console.error(err)
