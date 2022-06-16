@@ -72,8 +72,6 @@ export function postQuiz(payload) {
     axios.post("http://localhost:9000/api/quiz/new", payload)
     .then(res=> {
       const infoMessage = `Congrats: "${res.data.question}" is a great question!`
-      const newQuestion = res.data
-      dispatch(setQuiz(newQuestion))
       dispatch(setMessage(infoMessage))
       dispatch(resetForm())
     })
