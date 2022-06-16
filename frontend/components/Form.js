@@ -5,6 +5,9 @@ import * as actionCreators from '../state/action-creators'
 export function Form(props) {
 
   const onChange = evt => {
+    const { id, value } = evt.target
+    console.log(evt.target.id)
+    props.inputChange({ id, value })
 
   }
 
