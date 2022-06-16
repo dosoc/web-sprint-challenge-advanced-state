@@ -32,7 +32,7 @@ function Quiz(props) {
                   return (
                     <div className={props.selectedAnswer && props.selectedAnswer.answer_id === ans.answer_id?"answer selected":"answer"} key={ans.answer_id}>
                     {ans.text}
-                    <button onClick={()=>handleSelected(ans.answer_id)}>
+                    <button  onClick={()=>handleSelected(ans.answer_id)}>
                       {props.selectedAnswer && props.selectedAnswer.answer_id === ans.answer_id?"SELECTED":"select"}
                     </button>
                   </div>
@@ -40,7 +40,7 @@ function Quiz(props) {
                   })}
             </div>
 
-            <button id="submitAnswerBtn" onClick={handleSubmit}>Submit answer</button>
+            <button disabled={!props.selectedAnswer} id="submitAnswerBtn" onClick={handleSubmit}>Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
