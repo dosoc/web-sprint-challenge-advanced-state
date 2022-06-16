@@ -31,7 +31,14 @@ function quiz(state = initialQuizState, action) {
 
 const initialSelectedAnswerState = null
 function selectedAnswer(state = initialSelectedAnswerState, action) {
-  return state
+  switch (action.type) {
+    case types.SET_SELECTED_ANSWER:
+      return { ...state,
+          selectedAnswer: action.payload
+      }
+    default: 
+      return state
+  }
 }
 
 const initialMessageState = ''
@@ -49,6 +56,9 @@ function form(state = initialFormState, action) {
     case types.INPUT_CHANGE: {
       const {id,value} = action.payload
       return {...state, [id]: value}
+    }
+    case types.RESET_FORM: {
+      return initialFormState
     }
     default:
       return state

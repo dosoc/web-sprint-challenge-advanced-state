@@ -10,7 +10,9 @@ export function moveCounterClockwise() {
   return { type: types.MOVE_COUNTERCLOCKWISE }
  }
 
-export function selectAnswer() { }
+export function selectAnswer(answer) { 
+  return {type: types.SET_SELECTED_ANSWER, payload: answer}
+}
 
 export function setMessage() { }
 
@@ -23,17 +25,20 @@ export function inputChange({id, value}) {
   }
 }
 
-export function resetForm() { }
+export function resetForm() {
+  return {
+    type: types.RESET_FORM,
+  }
+}
 
 // ❗ Async action creators
 export function fetchQuiz() {
   return function (dispatch) {
     axios.get("http://localhost:9000/api/quiz/next")
       .then(res=>{
-        console.log(res.data)
         dispatch({type: types.SET_QUIZ_INTO_STATE, payload: res.data})
       }).catch(err=>{
-        debugger
+        console.error(err)
       })
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
@@ -48,8 +53,16 @@ export function postAnswer() {
     // - Dispatch the fetching of the next quiz
   }
 }
-export function postQuiz() {
+export function postQuiz(payload) {
   return function (dispatch) {
+    axios.post("http://localhost:9000/api/quiz/new", payload)
+    .then(res=> {
+      const newQuestion = res.data
+      dispatch({type: types.SET_QUIZ_INTO_STATE, payload: newQuestion})
+    })
+    .catch(err=> {
+      console.error(err)
+    })
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form
