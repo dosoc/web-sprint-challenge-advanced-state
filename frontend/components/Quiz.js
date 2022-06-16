@@ -3,42 +3,44 @@ import {connect} from 'react-redux'
 import * as actions from '../state/action-creators'
 
 function Quiz(props) {
-  console.log(`this is quiz props ${props}`)
-  console.log(props)
 
   useEffect(()=>{
     if (!props.quiz) props.fetchQuiz()
   },[])
 
   const handleSelected = (id) =>{
-    const questionID = props.quiz.quiz.quiz_id
+    const questionID = props.quiz.quiz_id
     const answerID = {
       quiz_id: questionID,
       answer_id: id
     }
     props.selectAnswer(answerID)
   }
+  const handleSubmit = () => {
+    props.postAnswer(props.selectedAnswer)
+    props.fetchQuiz()
+  }
   return (
     <div id="wrapper">
       {props.quiz ? (
           <>
-            <h2>{props.quiz.quiz.question}</h2>
+            <h2>{props.quiz.question}</h2>
             
 
             <div id="quizAnswers">
-              {props.quiz.quiz.answers.map(ans=>{
+              {props.quiz.answers.map(ans=>{
                   return (
-                    <div className="answer selected" key={ans.answer_id}>
+                    <div className={props.selectedAnswer && props.selectedAnswer.answer_id === ans.answer_id?"answer selected":"answer"} key={ans.answer_id}>
                     {ans.text}
                     <button onClick={()=>handleSelected(ans.answer_id)}>
-                      select
+                      {props.selectedAnswer && props.selectedAnswer.answer_id === ans.answer_id?"SELECTED":"select"}
                     </button>
                   </div>
                   )
                   })}
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button id="submitAnswerBtn" onClick={handleSubmit}>Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
@@ -47,7 +49,8 @@ function Quiz(props) {
 }
 const mapStatetoProps = state => {
   return {
-    quiz: state.quiz
+    quiz: state.quiz,
+    selectedAnswer: state.selectedAnswer
   }
 }
 export default connect(mapStatetoProps, actions)(Quiz)

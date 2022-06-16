@@ -6,7 +6,6 @@ export function Form(props) {
 
   const onChange = evt => {
     const { id, value } = evt.target
-    console.log(evt.target.id)
     props.inputChange({ id, value })
 
   }
@@ -18,7 +17,6 @@ export function Form(props) {
       false_answer_text: props.form.newFalseAnswer
     }
     evt.preventDefault()
-    console.log(newQuestion)
     props.postQuiz(newQuestion)
     props.resetForm()
 
