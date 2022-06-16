@@ -12,17 +12,16 @@ export function Form(props) {
 
   const onSubmit = evt => {
     const newQuestion = {
-      question_text: props.form.newQuestion,
-      true_answer_text: props.form.newTrueAnswer,
-      false_answer_text: props.form.newFalseAnswer
+      question_text: props.form.newQuestion.trim(),
+      true_answer_text: props.form.newTrueAnswer.trim(),
+      false_answer_text: props.form.newFalseAnswer.trim()
     }
     evt.preventDefault()
     props.postQuiz(newQuestion)
-    props.resetForm()
 
   }
 
-  const formValues = !!(props.form.newQuestion && props.form.newTrueAnswer && props.form.newFalseAnswer)
+  const formValues = !!(props.form.newQuestion.trim() && props.form.newTrueAnswer.trim() && props.form.newFalseAnswer.trim())
 
   return (
     <form id="form" onSubmit={onSubmit}>

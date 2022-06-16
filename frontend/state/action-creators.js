@@ -40,7 +40,7 @@ export function fetchQuiz() {
   return function (dispatch) {
     axios.get("http://localhost:9000/api/quiz/next")
       .then(res=>{
-        dispatch({type: types.SET_QUIZ_INTO_STATE, payload: res.data})
+        dispatch(setQuiz(res.data))
       }).catch(err=>{
         console.error(err)
       })
@@ -54,8 +54,9 @@ export function postAnswer(payload) {
     axios.post("http://localhost:9000/api/quiz/answer", payload)
       .then(res=> {
         const infoMessage = res.data.message
-        dispatch({ type: types.SET_QUIZ_INTO_STATE, payload: null})
+        dispatch(setQuiz(null))
         dispatch(setMessage(infoMessage))
+        dispatch(fetchQuiz())
       })
       .catch(err=> {
         console.error(err)
@@ -74,6 +75,7 @@ export function postQuiz(payload) {
       const newQuestion = res.data
       dispatch(setQuiz(newQuestion))
       dispatch(setMessage(infoMessage))
+      dispatch(resetForm())
     })
     .catch(err=> {
       console.error(err)

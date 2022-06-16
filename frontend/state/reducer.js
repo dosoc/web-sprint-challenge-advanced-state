@@ -11,8 +11,10 @@ function wheel(state = initialWheelState, action) {
     case types.MOVE_COUNTERCLOCKWISE: {
       return state===5? 0 : state + 1
     }
+    default: 
+      return state
   }
-  return state
+ 
 }
 
 const initialQuizState = null
@@ -30,7 +32,7 @@ const initialSelectedAnswerState = null
 function selectedAnswer(state = initialSelectedAnswerState, action) {
   switch (action.type) {
     case types.SET_SELECTED_ANSWER:
-      return action.payload
+      return state = action.payload
     default: 
       return state
   }
@@ -38,7 +40,7 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
 
 const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
-  switch (action.types) {
+  switch (action.type) {
     case types.SET_INFO_MESSAGE:
       debugger
       return action.payload

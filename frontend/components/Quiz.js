@@ -18,7 +18,6 @@ function Quiz(props) {
   }
   const handleSubmit = () => {
     props.postAnswer(props.selectedAnswer)
-    props.fetchQuiz()
   }
   return (
     <div id="wrapper">
